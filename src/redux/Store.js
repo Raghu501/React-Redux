@@ -1,5 +1,6 @@
 import React from "react"
 import { createStore, applyMiddleware, compose } from "redux"
+import thunk from "redux-thunk"
 import rootreducer from "./Reducers/rootReducers"
 import reduxImmutableStateInvariant from "redux-immutable-state-invariant";
 //initialize store
@@ -12,7 +13,7 @@ const store = (initialState) => {
         rootreducer,
         initialState,
         //warns us if we accidentally mutate state in store
-        composeEnhancers(applyMiddleware(reduxImmutableStateInvariant()))
+        composeEnhancers(applyMiddleware(thunk, reduxImmutableStateInvariant()))
     );
 }
 

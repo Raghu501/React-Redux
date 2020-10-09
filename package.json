@@ -4,16 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.dev.js --port 3000"
+    "start": "npm-run-all --parallel start:dev start:api",
+    "start:dev": "webpack-dev-server --config webpack.config.dev.js --port 3000",
+    "prestart:api": "node tools/createMockDb.js",
+    "start:api": "node tools/apiServer.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "json-server": "^0.16.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
-    "redux-immutable-state-invariant": "^2.1.0"
+    "redux-immutable-state-invariant": "^2.1.0",
+    "redux-thunk": "^2.3.0",
+    "run": "^1.4.0",
+    "run-all": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -21,6 +28,7 @@
     "babel-preset-react-app": "^9.1.2",
     "css-loader": "^4.3.0",
     "html-webpack-plugin": "^4.5.0",
+    "npm-run-all": "^4.1.5",
     "path": "^0.12.7",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
