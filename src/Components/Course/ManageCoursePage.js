@@ -1,35 +1,35 @@
 import React, { Component } from "react"
-import CourseList from "./CourseList"
+//import CourseList from "./CourseList"
 import { connect } from "react-redux";
 import propTypes from "prop-types";
 
-import * as CourseActions from "../../redux/CourseActions"
-import * as AuthorActions from "../../redux/AuthorActions"
-import { bindActionCreators } from "redux";
-class Course extends Component {
-    componentDidMount() {
+import { loadCourses } from "../../redux/CourseActions"
+import { loadAuthors } from "../../redux/AuthorActions"
+//import { bindActionCreators } from "redux";
+class ManageCoursesPage extends Component {
 
-        this.props.actions.loadCourses().catch(e => {
+    componentDidMount() {
+        //const { courses, authors } = this.props;
+        loadCourses().catch(e => {
             alert('Loading courses failed');
         });
-
-        this.props.actions.loadAuthors().catch(e => {
+        loadAuthors().catch(e => {
             alert('Loading authors failed');
         });
     }
+
     render() {
         //console.log(this.props.courses);
         return (
-            <CourseList courses={this.props.courses} >
-            </CourseList>
+            <p>Manage Course</p>
         )
     }
 }
-Course.propTypes = {
+ManageCoursesPage.propTypes = {
     //createCourse: propTypes.func.isRequired,
     courses: propTypes.array.isRequired,
     authors: propTypes.array.isRequired,
-    actions: propTypes.object.isRequired
+    //actions: propTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -45,7 +45,6 @@ function mapStateToProps(state) {
                     };
                 }),
         authors: state.authors
-
     }
 }
 
@@ -54,11 +53,14 @@ function mapDispatchToProps(dispatch) {
     return {
         //createCourse: course => dispatch(courseActions.createCourse(course))
         //actions: bindActionCreators({ CourseActions, AuthorActions }, dispatch)
-        actions: {
-            loadCourses: bindActionCreators(CourseActions.loadCourses, dispatch),
-            loadAuthors: bindActionCreators(AuthorActions.loadAuthors, dispatch)
-        }
+        //actions: {
+        // loadCourses: bindActionCreators(CourseActions.loadCourses, dispatch),
+        //loadAuthors: bindActionCreators(AuthorActions.loadAuthors, dispatch)
+        //}
+
+        loadCourses: loadCourses,
+        loadAuthors: loadAuthors,
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Course);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursesPage);

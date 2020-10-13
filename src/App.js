@@ -6,7 +6,7 @@ import {
     Route,
     Switch,
 } from "react-router-dom"
-import Course from "./Components/Course/Course"
+import Course from "./Components/Course/CoursesPage"
 const App = () => {
     return (
         <div>

@@ -1,11 +1,13 @@
+import initialState from "./initialState"
 
-export default function courseReducer(state = [], action) {//array of courses
+export default function courseReducer(state = initialState.courses, action) {//array of courses
 
     switch (action.type) {
         case "CREATE_COURSE":
             return [...state, { ...action.course }]
 
         case "LOAD_SUCCESS":
+            //add to redux store
             return action.courses;
         default:
             return state;
