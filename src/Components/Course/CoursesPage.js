@@ -9,20 +9,29 @@ import { bindActionCreators } from "redux";
 class CoursesPage extends Component {
 
     componentDidMount() {
+        console.log("ct")
         const { actions, courses, authors } = this.props;
-        actions.loadCourses().catch(e => {
-            alert('Loading courses failed');
-        });
-        actions.loadAuthors().catch(e => {
-            alert('Loading authors failed');
-        });
+        //console.log(actions.loadCourses);
+        //debugger
+        if (courses.length === 0) {
+            actions.loadCourses().catch(e => {
+                alert('Loading courses failed');
+            });
+        }
+        if (authors.length === 0) {
+            actions.loadAuthors().catch(e => {
+                alert('Loading authors failed');
+            });
+        }
     }
 
     render() {
         //console.log(this.props.courses);
         return (
+
             <CourseList courses={this.props.courses} >
             </CourseList>
+
         )
     }
 }
@@ -34,11 +43,11 @@ CoursesPage.propTypes = {
 };
 
 function mapStateToProps(state) {
+    console.log("msp")
     return {
         courses:
             state.authors.length === 0 ? [] :
                 state.courses.map(c => {
-
                     //console.log("a", state.authors.find(i => i.id === c.authorId).name)
                     return {
                         ...c,
@@ -50,7 +59,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-
+    console.log("msd")
     return {
         //createCourse: course => dispatch(courseActions.createCourse(course))
         //actions: bindActionCreators({ CourseActions, AuthorActions }, dispatch)

@@ -3,12 +3,22 @@ import initialState from "./initialState"
 export default function courseReducer(state = initialState.courses, action) {//array of courses
 
     switch (action.type) {
+
         case "CREATE_COURSE":
             return [...state, { ...action.course }]
 
         case "LOAD_SUCCESS":
             //add to redux store
             return action.courses;
+        case "UPDATE_COURSE":
+            let c = { ...state.courses };
+            let uc = c.find(x => x.id === action.course.id);
+            return [...state, { ...uc }]
+
+        case "DELETE_COURSE":
+            //remove course from the array    
+            break;
+
         default:
             return state;
 

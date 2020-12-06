@@ -1,7 +1,6 @@
 const webpack = require("webpack");//common js style of node since node doesnot support es6 style
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-
 process.env.NODE_ENV = "development";
 
 module.exports = {
@@ -39,7 +38,6 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-
                 use: ["css-loader", "style-loader"]
             }
         ]

@@ -1,6 +1,5 @@
 import * as authorsAPI from "../api/AuthorApi"
 export function createAuthor(author) {
-
     return {
         type: "CREATE_AUTHOR",
         author: author//optional
@@ -25,8 +24,9 @@ export function loadAuthors() {
     //redux-thunk injects dispatch, no need to inject ourself
     return function (dispatch) {
         //async call
+        //rerurn promise
         return authorsAPI.getAuthors().then(authors => {
-           // alert("A")
+            // alert("A")
             console.log(authors)
             //get action object from action creator
             let action = getLoadAuthorSuccess(authors);

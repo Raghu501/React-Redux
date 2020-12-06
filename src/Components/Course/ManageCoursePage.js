@@ -1,63 +1,79 @@
-import React, { Component } from "react"
-//import CourseList from "./CourseList"
+import React, { useState } from "react"
 import { connect } from "react-redux";
 import propTypes from "prop-types";
-
 import { loadCourses } from "../../redux/CourseActions"
 import { loadAuthors } from "../../redux/AuthorActions"
-//import { bindActionCreators } from "redux";
-class ManageCoursesPage extends Component {
+import { useEffect } from "react";
+import CourseForm from "./CourseForm";
+import { newCourse } from "../../../tools/mockData";
 
-    componentDidMount() {
-        //const { courses, authors } = this.props;
-        loadCourses().catch(e => {
-            alert('Loading courses failed');
-        });
-        loadAuthors().catch(e => {
-            alert('Loading authors failed');
-        });
+function ManageCoursesPage({ courses, authors, loadAuthors, loadCourses, ...props }) {
+    //array destructing
+    let [course, setCourse] = useState({ ...props.course });
+    useEffect(() => {
+
+        console.log("c", course);
+        console.log("authors", authors);
+        if (courses.length === 0) {
+            loadCourses();
+            //.catch(e => {
+            //  alert('Loading courses failed');
+            //});
+        }
+        if (authors.length === 0) {
+            loadAuthors();
+            // alert(1)
+            //const { courses, authors } = this.props;
+            //        this.props.loadCourses1().catch(e => {
+            //          alert('Loading courses failed');
+            //    });
+
+            //  this.props.loadAuthors1().catch(e => {
+            //    alert('Loading authors failed');
+            //});
+        }
+    }, []);
+
+    function onSave() {
+
+
     }
 
-    render() {
-        //console.log(this.props.courses);
-        return (
-            <p>Manage Course</p>
-        )
+    function onChange(evt) {
+        //updaate local state
+        debugger
+        const { name, value } = evt;
+        setCourse(prevCourse => ({
+            ...prevCourse,
+            [name]: name === "authorId" ? parseInt(value, 10) : value
+        }));
     }
+
+    return (
+        <CourseForm course={course} authors={authors} onSave={onSave}
+            onChange={onChange}></CourseForm>
+    )
 }
+
 ManageCoursesPage.propTypes = {
-    //createCourse: propTypes.func.isRequired,
     courses: propTypes.array.isRequired,
     authors: propTypes.array.isRequired,
-    //actions: propTypes.object.isRequired
+    loadCourses: propTypes.func.isRequired,
+    loadAuthors: propTypes.func.isRequired,
+    course: propTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
+    console.log("msp1", state.authors)
     return {
-        courses:
-            state.authors.length === 0 ? [] :
-                state.courses.map(c => {
-
-                    //console.log("a", state.authors.find(i => i.id === c.authorId).name)
-                    return {
-                        ...c,
-                        authorId: state.authors.find(i => i.id === c.authorId).name
-                    };
-                }),
-        authors: state.authors
+        courses: state.courses,
+        authors: state.authors,
+        course: newCourse
     }
 }
-
+//what actions we want to access in the component
 function mapDispatchToProps(dispatch) {
-
     return {
-        //createCourse: course => dispatch(courseActions.createCourse(course))
-        //actions: bindActionCreators({ CourseActions, AuthorActions }, dispatch)
-        //actions: {
-        // loadCourses: bindActionCreators(CourseActions.loadCourses, dispatch),
-        //loadAuthors: bindActionCreators(AuthorActions.loadAuthors, dispatch)
-        //}
-
         loadCourses: loadCourses,
         loadAuthors: loadAuthors,
     }
