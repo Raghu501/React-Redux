@@ -55,15 +55,16 @@ export function loadCourses() {
     }
 }
 
+//thunk for create and update
 export function saveCourse(course) {
     debugger
     //redux-thunk middleware injects dispatch, no need to inject ourself
     return function (dispatch) {
         //async call
-        return courseAPI.saveCourse(course).then(course => {
+        return courseAPI.saveCourse(course).then(savedCourse => {
             debugger
             //get action object from action creator
-            let action = saveCourseAction(course);
+            let action = course.id ? saveCourseAction(savedCourse) : createCourse(savedCourse);
             //dipatch call to update the redux store
             dispatch(action);
         }).catch(error => {

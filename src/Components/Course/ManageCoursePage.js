@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import propTypes from "prop-types";
 import { loadCourses } from "../../redux/CourseActions"
 import { loadAuthors } from "../../redux/AuthorActions"
+import { saveCourse } from "../../redux/CourseActions"
 import { useEffect } from "react";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
@@ -34,9 +35,10 @@ function ManageCoursesPage({ courses, authors, loadAuthors, loadCourses, ...prop
         }
     }, []);
 
-    function onSave() {
+    function onSave(evt) {
+        evt.preventDefault();
 
-
+        props.history.push("/Courses");
     }
 
     function onChange(evt) {
@@ -60,15 +62,20 @@ ManageCoursesPage.propTypes = {
     authors: propTypes.array.isRequired,
     loadCourses: propTypes.func.isRequired,
     loadAuthors: propTypes.func.isRequired,
-    course: propTypes.object.isRequired
+    course: propTypes.object.isRequired,
+    saveCourse: propTypes.func.isRequired,
+    history: propTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     console.log("msp1", state.authors)
+    debugger
     return {
         courses: state.courses,
         authors: state.authors,
-        course: newCourse
+        course//: //ownProps.match.params.slug ? state.courses.find(x => x.slug === ownProps.match.params.slug)
+            : newCourse,
+
     }
 }
 //what actions we want to access in the component
@@ -76,6 +83,8 @@ function mapDispatchToProps(dispatch) {
     return {
         loadCourses: loadCourses,
         loadAuthors: loadAuthors,
+        saveCourse: saveCourse,
+
     }
 }
 

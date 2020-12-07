@@ -6,9 +6,26 @@ import propTypes from "prop-types";
 import * as CourseActions from "../../redux/CourseActions"
 import * as AuthorActions from "../../redux/AuthorActions"
 import { bindActionCreators } from "redux";
+import { Redirect } from "react-router";
 class CoursesPage extends Component {
 
+    // constructor(props) {
+    //     super(props);
+    //
+    state = {
+        isNavToAddCoursePAge: false
+    }
+    //    this.handleAdd = this.handleAdd.bind(this);
+    //}
+
+
+    handleAdd = () => {
+        debugger
+        this.setState({ isNavToAddCoursePAge: true });
+    }
+
     componentDidMount() {
+
         console.log("ct")
         const { actions, courses, authors } = this.props;
         //console.log(actions.loadCourses);
@@ -27,11 +44,15 @@ class CoursesPage extends Component {
 
     render() {
         //console.log(this.props.courses);
+        if (this.state.isNavToAddCoursePAge) { return <Redirect to="/Course" /> }
         return (
+            <>
 
-            <CourseList courses={this.props.courses} >
-            </CourseList>
-
+                {/* <button onClick={this.setState({isNavToAddCoursePAge :true })}>Add</button> */}
+                <div> <button onClick={this.handleAdd} >ADD</button></div>
+                < CourseList courses={this.props.courses} >
+                </CourseList >
+            </>
         )
     }
 }
