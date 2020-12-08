@@ -7,10 +7,13 @@ import { saveCourse } from "../../redux/CourseActions"
 import { useEffect } from "react";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
+import { useHistory } from "react-router";
+
 
 function ManageCoursesPage({ courses, authors, loadAuthors, loadCourses, ...props }) {
     //array destructing
     let [course, setCourse] = useState({ ...props.course });
+    let uh = useHistory();
     useEffect(() => {
 
         console.log("c", course);
@@ -37,8 +40,10 @@ function ManageCoursesPage({ courses, authors, loadAuthors, loadCourses, ...prop
 
     function onSave(evt) {
         evt.preventDefault();
-
-        props.history.push("/Courses");
+        
+        console.log(uh)
+        uh.push("/Courses");
+        //props.history.push("/Courses");
     }
 
     function onChange(evt) {
